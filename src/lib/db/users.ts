@@ -35,6 +35,7 @@ export async function getUserById(uid: string) {
         return { user: userSnap.val() }
     } catch (error) {
         console.error("[USER ID NOT FOUND]", error);
+        throw error;   // Re-throw to handle in UI
     }
 }
 
@@ -48,7 +49,7 @@ export async function getUserNameById(uid: string) {
         return { userName: name };
     } catch (error) {
         console.error("[USERNAME FETCH ERROR]", error);
-        return null;
+        throw error;    // Re-throw to handle in UI 
     }
 }
 
@@ -65,6 +66,7 @@ export async function getUserTrip(uid: string) {
         return tripSnap.exists() ? { tripId, data: tripSnap.val() } : null;
     } catch (error) {
         console.error("[USER TRIP NOT FOUND]", error);
+        throw error; // Re-throw to handle in UI
     }
 }
 
@@ -80,6 +82,7 @@ export async function getCurrentTripid(uid: string): Promise<String | null | und
         return snapshot.exists() ? snapshot.val() : null;
     } catch (error) {
         console.error("[GET CURRENT TRIP ERROR]", error);
+        throw error; // Re-throw to handle in UI
     }
 }
 
@@ -88,6 +91,13 @@ export async function getCurrentTripid(uid: string): Promise<String | null | und
  * @param uid Firebase UID
  */
 export async function clearUserTrip(uid: string) {
-    await set(ref(database, `users/${uid}/currentTripId`), null);
+    // Clear the current trip ID for the user
+    try {
+        await set(ref(database, `users/${uid}/currentTripId`), null);
+    } catch (error) {
+        console.error("[CLEAR USER TRIP ERROR]", error);
+        throw error; // Re-throw to handle in UI
+    }
+
 }
 

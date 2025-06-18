@@ -34,6 +34,7 @@ export async function createTrip(creatorId: string, routeName: string, creatorNa
         return tripId;
     } catch (error) {
         console.error("[CREATE TRIP ERROR]", error);
+        throw error; // Re-throw to handle in UI
     }
 }
 
@@ -60,6 +61,7 @@ export async function joinTrip(uid: string, tripId: string, name: string) {
         });
     } catch (error) {
         console.error("[JOIN TRIP ERROR]", error)
+        throw error; // Re-throw to handle in UI
     }
 }
 
@@ -101,6 +103,7 @@ export async function leaveTrip(uid: string, tripId: string) {
 
     } catch (error) {
         console.error("[LEAVE TRIP ERROR]", error);
+        throw error; // Re-throw to handle in UI
     }
 }
 
