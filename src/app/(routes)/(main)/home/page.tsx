@@ -34,8 +34,8 @@ export default function HomePage() {
         if (!user?.uid || !user?.displayName) return;
         setCreatingTrip(true);
         try {
-            const newTripId = await createTrip(user.uid, tripName, user.displayName);
-            router.push(`/trip`);
+            // const newTripId = await createTrip(user.uid, tripName, user.displayName);
+            router.push(`/start`);
         } catch (error) {
             alert("Failed to create trip. Try again.");
             console.error("[CREATE_TRIP_ERROR]", error);
